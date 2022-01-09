@@ -1,23 +1,51 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [nro1, setNro1] = useState(0);
+  const [nro2, setNro2] = useState(0);
+  const [resultado, setResultado] = useState(0);
+  const [operacao, setOperacao] = useState('Somar');
+
+  const calcular = () => {
+    if (operacao == "Somar")
+      return parseFloat(nro1) + parseFloat(nro2);
+    else if (operacao == "Subtrair")
+      return parseFloat(nro1) - parseFloat(nro2);
+    else if (operacao == "Dividir")
+      return parseFloat(nro1) / parseFloat(nro2);
+    else
+      return parseFloat(nro1) * parseFloat(nro2);
+  }
+
+  useEffect(() => {
+    setResultado(calcular());
+  }, [nro1, nro2, operacao]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Calculadora com React</h1>
+      <label>Primeiro Nº</label>
+      <input
+        type="number"
+        value={nro1}
+        onChange={(e) => setNro1(e.target.value)} />
+
+      <label>Segundo Nº</label>
+      <input
+        type="number"
+        value={nro2}
+        onChange={(e) => setNro2(e.target.value)} />
+
+      <select onChange={(e) => setOperacao(e.target.value)}>
+        <option >Somar</option>
+        <option>Subtrair</option>
+        <option>Dividir</option>
+        <option>Multiplicar</option>
+      </select>
+
+
+      <label>Resultado {resultado}</label>
     </div>
   );
 }
